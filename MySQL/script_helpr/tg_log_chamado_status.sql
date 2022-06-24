@@ -1,3 +1,4 @@
+use helpr_hyrsa;
 DELIMITER //
 CREATE TRIGGER tg_log_status_chamado BEFORE UPDATE 
 ON chamado
@@ -9,3 +10,6 @@ BEGIN
 	END IF;
 END //
 DELIMITER ;
+
+use helpr_hyrsa;
+select * from log_chamado_status;
