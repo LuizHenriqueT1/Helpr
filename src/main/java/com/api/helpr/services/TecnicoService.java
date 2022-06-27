@@ -51,6 +51,7 @@ public class TecnicoService {
 	//Método para modificar técnicos existentes.
 	public Tecnico update(Integer id, TecnicoDTO objDto) {
 		objDto.setId(id);
+		objDto.setSenha(encoder.encode(objDto.getSenha()));
 		Tecnico oldObj = findById(id);
 		validaCpfEEmail(objDto);
 		oldObj = new Tecnico(objDto);
