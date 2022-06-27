@@ -11,6 +11,6 @@ public interface ChamadoRepository extends JpaRepository<Chamado, Integer>{
 	@Query(value="SELECT * FROM chamado WHERE tecnico_id = :tecnico AND status =1", nativeQuery = true)
 	List<Chamado> findByTecnico(Integer tecnico);
 	
-	@Query(value="SELECT * FROM chamado WHERE cliente_id = :cliente AND status =0", nativeQuery = true)
+	@Query(value="CALL sps_chamados_abertos_cliente(:cliente);", nativeQuery = true)
     List<Chamado> findByCliente(Integer cliente);
 }
