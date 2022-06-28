@@ -64,6 +64,10 @@ public class ChamadoService {
 		return repository.findByCliente(cliente);
 	}
 	
+	public List<Chamado> reportChamadoStatus(Integer status) {
+		return repository.findByStatus(status);
+	}
+	
 	public List<LogChamadoStatus> findDiaLogChamado(LocalDate dia){
 		return logChamadoRepository.findLogChamadoStatusDia(dia);
 	}
