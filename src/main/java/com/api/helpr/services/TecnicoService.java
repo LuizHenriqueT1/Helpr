@@ -1,5 +1,6 @@
 package com.api.helpr.services;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.api.helpr.domain.LogTecnicoPerfil;
 import com.api.helpr.domain.Pessoa;
 import com.api.helpr.domain.Tecnico;
 import com.api.helpr.domain.dtos.TecnicoDTO;
+import com.api.helpr.repositories.LogTecnicoPerfilRepository;
 import com.api.helpr.repositories.PessoaRepository;
 import com.api.helpr.repositories.TecnicoRepository;
 import com.api.helpr.services.exceptions.DataIntegrityViolationException;
@@ -25,6 +28,9 @@ public class TecnicoService {
 	private PessoaRepository pessoaRepository;
 	
 	@Autowired
+	private LogTecnicoPerfilRepository logTecnicoPerfilRepository;
+	
+	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	//Métoido de busca por um ID no banco.
@@ -37,6 +43,11 @@ public class TecnicoService {
 	//Método de busca para todos os registros de técnicos
 	public List<Tecnico> findAllTecnicos() {
 		return repository.findAll();
+	}
+	
+
+	public List<LogTecnicoPerfil> findLogTecnicoPerfil(LocalDate dataDia) {
+		return logTecnicoPerfilRepository.findLogChamadoPerfilDia(dataDia);
 	}
 
 	//Método que fará a criação de novo técnico.
@@ -82,4 +93,5 @@ public class TecnicoService {
 			throw new DataIntegrityViolationException("E-mail já cadastrado no sistema!");
 		}
 	}
+
 }

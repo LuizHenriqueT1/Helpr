@@ -1,6 +1,7 @@
 package com.api.helpr.resources;
 
 import java.net.URI;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.api.helpr.domain.LogTecnicoPerfil;
 import com.api.helpr.domain.Tecnico;
 import com.api.helpr.domain.dtos.TecnicoDTO;
 import com.api.helpr.services.TecnicoService;
@@ -29,6 +31,7 @@ public class TecnicoResource {
 	
 	@Autowired
 	private TecnicoService service;
+	
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<TecnicoDTO> findById(@PathVariable Integer id){
@@ -42,6 +45,13 @@ public class TecnicoResource {
 		List<TecnicoDTO> listDto = list.stream()
 				.map(tec -> new TecnicoDTO(tec)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@GetMapping("/relatorio/log")
+	public ResponseEntity<List<LogTecnicoPerfil>> findLogTecnicoPerfil(){
+		LocalDate dataDia = LocalDate.now();
+		List<LogTecnicoPerfil> list = service.findLogTecnicoPerfil(dataDia);
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -67,5 +77,6 @@ public class TecnicoResource {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
 	}
+	
 
  }
