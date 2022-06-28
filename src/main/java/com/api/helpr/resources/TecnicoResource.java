@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.api.helpr.domain.LogTecnicoPerfil;
+import com.api.helpr.domain.LogTecnicoExclusao;
 import com.api.helpr.domain.Tecnico;
 import com.api.helpr.domain.dtos.TecnicoDTO;
 import com.api.helpr.services.TecnicoService;
@@ -76,6 +77,12 @@ public class TecnicoResource {
 	public ResponseEntity<TecnicoDTO> delete(@PathVariable Integer id){
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(value="/log/exclusao")
+	public ResponseEntity<List<LogTecnicoExclusao>> findLogTecnicoExclusao(){
+		List <LogTecnicoExclusao> logList = service.findLogTecnicoExclusao();
+		return ResponseEntity.ok().body(logList);
 	}
 	
 
