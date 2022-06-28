@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.api.helpr.domain.Chamado;
+import com.api.helpr.domain.LogChamadoPrioridade;
 import com.api.helpr.domain.LogChamadoStatus;
 import com.api.helpr.domain.dtos.ChamadoDTO;
 import com.api.helpr.services.ChamadoService;
@@ -73,8 +74,8 @@ public class ChamadoResource {
 		List<ChamadoDTO> listDto = list.stream().map(obj -> new ChamadoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDto);
 	}
-	
-	@PreAuthorize("hasAnyRole('ROLE_TECNICO')")
+    
+ 	@PreAuthorize("hasAnyRole('ROLE_TECNICO')")
 	@PostMapping
 	public ResponseEntity<ChamadoDTO> create(@Valid @RequestBody ChamadoDTO objDto){
 		Chamado obj = service.create(objDto);
@@ -94,6 +95,12 @@ public class ChamadoResource {
 		List <LogChamadoStatus> logList = service.findDiaLogChamado(dataDia);
 		return ResponseEntity.ok().body(logList);
 	}
+	   @GetMapping(value="/log/prioridade")
+		public ResponseEntity<List<LogChamadoPrioridade>> findLogPrioridadeChamado(){
+			LocalDate dataDia = LocalDate.now();
+			List <LogChamadoPrioridade> logList = service.findDiaLogChamadoPrioridades(dataDia);
+			return ResponseEntity.ok().body(logList);
+		}
 
 	@PreAuthorize("hasAnyRole('ROLE_TECNICO')")
 	@GetMapping(value= "/relatorio-semanal/tecnico/{id}")

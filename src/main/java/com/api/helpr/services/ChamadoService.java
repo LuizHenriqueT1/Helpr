@@ -11,12 +11,14 @@ import org.springframework.stereotype.Service;
 
 import com.api.helpr.domain.Chamado;
 import com.api.helpr.domain.Cliente;
+import com.api.helpr.domain.LogChamadoPrioridade;
 import com.api.helpr.domain.LogChamadoStatus;
 import com.api.helpr.domain.Tecnico;
 import com.api.helpr.domain.dtos.ChamadoDTO;
 import com.api.helpr.domain.enums.Prioridade;
 import com.api.helpr.domain.enums.Status;
 import com.api.helpr.repositories.ChamadoRepository;
+import com.api.helpr.repositories.LogChamadoPrioridadeRepository;
 import com.api.helpr.repositories.LogChamadoStatusRepository;
 import com.api.helpr.services.exceptions.ObjectNotFoundException;
 
@@ -28,6 +30,10 @@ public class ChamadoService {
 	
 	@Autowired
 	private LogChamadoStatusRepository logChamadoRepository;
+	
+	@Autowired
+	private LogChamadoPrioridadeRepository logChamadoPrioridade;
+	
 	
 	@Autowired
 	private TecnicoService tecnicoService;
@@ -74,6 +80,10 @@ public class ChamadoService {
 	
 	public List<LogChamadoStatus> findDiaLogChamado(LocalDate dia){
 		return logChamadoRepository.findLogChamadoStatusDia(dia);
+	}
+	
+	public List<LogChamadoPrioridade> findDiaLogChamadoPrioridades(LocalDate dia){
+		return logChamadoPrioridade.findLogChamadoPrioridadeDia(dia);
 	}
 	
 	private Chamado newChamado(ChamadoDTO obj) {
