@@ -57,6 +57,14 @@ public class ChamadoResource {
 		List<ChamadoDTO> listDto = reportList.stream().map(rel -> new ChamadoDTO(rel)).collect(Collectors.toList()); 
 		return ResponseEntity.ok().body(listDto);
 	}
+
+	@GetMapping(value = "/relatorios/chamado")
+	public ResponseEntity<List<ChamadoDTO>> findReportChamadoChamado(){
+		LocalDate dataDia = LocalDate.now();
+		List<Chamado> reportList = service.reportChamadoChamado(dataDia);
+		List<ChamadoDTO> listDto = reportList.stream().map(rel -> new ChamadoDTO(rel)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
 	
 
     @GetMapping(value="/relatorios/status/{status}")
