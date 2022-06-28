@@ -13,6 +13,7 @@ import com.api.helpr.domain.Pessoa;
 import com.api.helpr.domain.Tecnico;
 import com.api.helpr.domain.dtos.TecnicoDTO;
 import com.api.helpr.repositories.LogTecnicoPerfilRepository;
+import com.api.helpr.repositories.LogTecnicoExclusaoRepository;
 import com.api.helpr.repositories.PessoaRepository;
 import com.api.helpr.repositories.TecnicoRepository;
 import com.api.helpr.services.exceptions.DataIntegrityViolationException;
@@ -23,6 +24,9 @@ public class TecnicoService {
 
 	@Autowired //Vinculo com repositório.
 	private TecnicoRepository repository;
+	
+	@Autowired
+	private LogTecnicoExclusaoRepository logTecnicoExclusaoRepository;
 
 	@Autowired //Vinculo com repositório de pessoa.
 	private PessoaRepository pessoaRepository;
@@ -94,4 +98,9 @@ public class TecnicoService {
 		}
 	}
 
+	public List<LogTecnicoExclusao> findLogTecnicoExclusao() {
+		return logTecnicoExclusaoRepository.findLogTecnicoExclusao();
+	}
+
+	
 }
