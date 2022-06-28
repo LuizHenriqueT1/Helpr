@@ -90,4 +90,9 @@ public class ChamadoService {
 		chamado.setObservacoes(obj.getObservacoes());
 		return chamado;
 	}
+
+	public List<Chamado> relChamadoSemanalTecnico(Integer idTecnico) {
+        Optional<List<Chamado>> obj = repository.findByRelatorioTecnico(idTecnico);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não foi encontrado: " + idTecnico));
+    }
 }

@@ -78,4 +78,12 @@ public class ChamadoResource {
 		List <LogChamadoStatus> logList = service.findDiaLogChamado(dataDia);
 		return ResponseEntity.ok().body(logList);
 	}
+
+	@PreAuthorize("hasAnyRole('ROLE_TECNICO')")
+	@GetMapping(value= "/relatorio-semanal/tecnico/{id}")
+	public ResponseEntity<List<ChamadoDTO>> findRelChamadoSemanalTecnico(@PathVariable Integer id) {
+		List<Chamado> relatorioList = service.relChamadoSemanalTecnico(id);
+		List<ChamadoDTO> listRelDto = relatorioList.stream().map(rel -> new ChamadoDTO(rel)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listRelDto);
+	}
 }
