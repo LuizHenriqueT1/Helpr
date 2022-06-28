@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.api.helpr.domain.LogTecnicoExclusao;
 import com.api.helpr.domain.LogTecnicoPerfil;
 import com.api.helpr.domain.Pessoa;
 import com.api.helpr.domain.Tecnico;
