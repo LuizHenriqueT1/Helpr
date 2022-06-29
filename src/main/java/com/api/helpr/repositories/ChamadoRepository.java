@@ -27,5 +27,8 @@ public interface ChamadoRepository extends JpaRepository<Chamado, Integer>{
 	
 	@Query(value="SELECT * FROM chamado WHERE status = :status", nativeQuery = true)
 	List<Chamado> findByStatus(Integer status);
+
+	@Query(value = "CALL sps_rel_chamados_enc_hoje_tecnicos()", nativeQuery = true)
+	Optional<List<Chamado>> findByRelChamadosHojeTecnicos();
 	
 }
