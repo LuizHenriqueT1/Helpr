@@ -113,4 +113,10 @@ public class ChamadoService {
         Optional<List<Chamado>> obj = repository.findByRelatorioTecnico(idTecnico);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não foi encontrado: " + idTecnico));
     }
+
+	public List<Chamado> relChamadosHojeTecnicos() {
+		Optional<List<Chamado>> obj = repository.findByRelChamadosHojeTecnicos();
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Não há lista de chamados hoje"));
+	} 
+	
 }

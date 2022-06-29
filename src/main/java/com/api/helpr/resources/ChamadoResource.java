@@ -109,4 +109,14 @@ public class ChamadoResource {
 		List<ChamadoDTO> listRelDto = relatorioList.stream().map(rel -> new ChamadoDTO(rel)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listRelDto);
 	}
+
+	@PreAuthorize("hasAnyRole('ROLE_TECNICO')")
+	@GetMapping(value= "/relatorio-hoje/tecnicos")
+	public ResponseEntity<List<ChamadoDTO>> findRelChamadoHojeTecnicos() {
+		List<Chamado> relatorioListAtual = service.relChamadosHojeTecnicos();
+		List<ChamadoDTO> listRelDto = relatorioListAtual.stream().map(rel -> new ChamadoDTO(rel)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listRelDto);
+	}
+
+
 }
