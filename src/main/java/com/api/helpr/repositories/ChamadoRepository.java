@@ -31,4 +31,6 @@ public interface ChamadoRepository extends JpaRepository<Chamado, Integer>{
 	@Query(value = "CALL sps_rel_chamados_enc_hoje_tecnicos()", nativeQuery = true)
 	Optional<List<Chamado>> findByRelChamadosHojeTecnicos();
 	
+	@Query(value="CALL sps_chamado_titulo(:titulo)", nativeQuery = true)
+	Optional<List<Chamado>> findByTitulo(String titulo);
 }

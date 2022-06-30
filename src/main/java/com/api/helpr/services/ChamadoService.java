@@ -86,6 +86,14 @@ public class ChamadoService {
 		return logChamadoPrioridade.findLogChamadoPrioridadeDia(dia);
 	}
 	
+	public List<Chamado> findByTitulo(String titulo) {
+        Optional<List<Chamado>> obj = repository.findByTitulo(titulo);
+        if(obj.get().size() <= 0) {
+        	obj = Optional.empty();
+        }
+        return obj.orElseThrow(() -> new ObjectNotFoundException("O chamado não foi encontrado: " + titulo));
+	}
+	
 	private Chamado newChamado(ChamadoDTO obj) {
 		Tecnico tecnico = tecnicoService.findById(obj.getTecnico());
 		Cliente cliente = clienteService.findById(obj.getCliente());
