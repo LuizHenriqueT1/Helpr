@@ -54,6 +54,13 @@ public class TecnicoResource {
 		List<LogTecnicoPerfil> list = service.findLogTecnicoPerfil(dataDia);
 		return ResponseEntity.ok().body(list);
 	}
+	@GetMapping(value ="/usuario/{nome}")
+	public ResponseEntity<List<TecnicoDTO>> findTecnico(@PathVariable String nome){
+		List<Tecnico> list = service.findTecnico(nome);
+		List<TecnicoDTO> listDto = list.stream()
+				.map(tec -> new TecnicoDTO(tec)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping

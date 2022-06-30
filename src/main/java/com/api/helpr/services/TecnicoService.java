@@ -102,6 +102,13 @@ public class TecnicoService {
 	public List<LogTecnicoExclusao> findLogTecnicoExclusao() {
 		return logTecnicoExclusaoRepository.findLogTecnicoExclusao();
 	}
+	public List<Tecnico> findTecnico(String nome) {
+		Optional<List<Tecnico>> obj = repository.findTecnico(nome);
+		if(obj.get().size() <= 0) {
+			obj = Optional.empty();
+		}
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Nome não encontrado "));
+	}
 
 	
 }
