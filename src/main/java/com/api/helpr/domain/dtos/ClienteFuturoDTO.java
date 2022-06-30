@@ -1,36 +1,29 @@
-package com.api.helpr.domain;
+package com.api.helpr.domain.dtos;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 
-import com.api.helpr.domain.dtos.ClienteFuturoDTO;
+import com.api.helpr.domain.ClienteFuturo;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity
-public class ClienteFuturo implements Serializable{
-
+public class ClienteFuturoDTO implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	@NotNull(message = "O campo NOME não poderá ser nulo")
 	private String nome;
+	@NotNull(message = "O campo EMAIL não poderá ser nulo")
 	private String email;
+	@NotNull(message = "O campo TELEFONE não poderá ser nulo")
 	private String telefone;
-	
+
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataCriacao = LocalDate.now();
 
-	public ClienteFuturo() {
-		super();
-	}
-
-	public ClienteFuturo(ClienteFuturoDTO obj) {
+	public ClienteFuturoDTO(ClienteFuturo obj)
+	 {
 		super();
 		this.id = obj.getId();
 		this.nome = obj.getNome();
@@ -38,14 +31,9 @@ public class ClienteFuturo implements Serializable{
 		this.telefone = obj.getTelefone();
 		this.dataCriacao = obj.getDataCriacao();
 	}
-	
-	public ClienteFuturo(Integer id, String nome, String email, String telefone, LocalDate dataCriacao) {
+
+	public ClienteFuturoDTO() {
 		super();
-		this.id = id;
-		this.nome = nome;
-		this.email = email;
-		this.telefone = telefone;
-		this.dataCriacao = dataCriacao;
 	}
 
 	public Integer getId() {
@@ -87,12 +75,5 @@ public class ClienteFuturo implements Serializable{
 	public void setDataCriacao(LocalDate dataCriacao) {
 		this.dataCriacao = dataCriacao;
 	}
-	
-	
-	
-	
-	
-	
-	
 
 }
