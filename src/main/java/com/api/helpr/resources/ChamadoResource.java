@@ -118,5 +118,10 @@ public class ChamadoResource {
 		return ResponseEntity.ok().body(listRelDto);
 	}
 
-
+	@GetMapping(value = "/titulo/{titulo}")
+	public ResponseEntity<List<ChamadoDTO>> findByTitulo(@PathVariable String titulo){
+		List<Chamado> list = service.findByTitulo(titulo);
+		List<ChamadoDTO> listDto = list.stream().map(obj -> new ChamadoDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
 }
