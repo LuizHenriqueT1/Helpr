@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.api.helpr.domain.Candidato;
 import com.api.helpr.domain.Chamado;
 import com.api.helpr.domain.Cliente;
 import com.api.helpr.domain.Tecnico;
 import com.api.helpr.domain.enums.Perfil;
 import com.api.helpr.domain.enums.Prioridade;
 import com.api.helpr.domain.enums.Status;
+import com.api.helpr.repositories.CandidatoRepository;
 import com.api.helpr.repositories.ChamadoRepository;
 import com.api.helpr.repositories.ClienteRepository;
 import com.api.helpr.repositories.TecnicoRepository;
@@ -23,6 +25,8 @@ public class DBService {
 	private TecnicoRepository tecnicoRepository;
 	@Autowired
 	private ClienteRepository clienteRepository;
+	@Autowired
+	private CandidatoRepository candidatoRepository;
 	@Autowired
 	private ChamadoRepository chamadoRepository;
 	@Autowired
@@ -49,6 +53,8 @@ public class DBService {
 		Cliente c3 = new Cliente(null, "Gregorio Grifinória", "075.261.600-51","grifinoriagreg@gmail.com", encoder.encode("1234"));
 		Cliente c4 = new Cliente(null, "Lorena Corvinal", "603.780.760-43","corvinallorena@gmail.com", encoder.encode("1234"));
 		
+		Candidato cdt1 = new Candidato(null, "Luiz Henrique", "lhdev@gmail.com", "luizhenrique", "tecnico de informatica", "desenvolvedor junior", "3500");
+		
 		Chamado ch1 = new Chamado(null, Prioridade.MEDIA, 
 				Status.ANDAMENTO, "Chamado Inaugural","Este é o 1o chamado para o sistema.", t1, c1);
 		Chamado ch2 = new Chamado(null, Prioridade.MEDIA, 
@@ -62,6 +68,7 @@ public class DBService {
 		
 		tecnicoRepository.saveAll(Arrays.asList(t1, t2, t3, t4, t5, t6));
 		clienteRepository.saveAll(Arrays.asList(c1, c2, c3, c4));
+		candidatoRepository.saveAll(Arrays.asList(cdt1));
 		chamadoRepository.saveAll(Arrays.asList(ch1, ch2, ch3, ch4, ch5));
 	}
 	
