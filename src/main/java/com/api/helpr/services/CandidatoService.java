@@ -1,5 +1,6 @@
 package com.api.helpr.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.validation.Valid;
@@ -27,5 +28,9 @@ public class CandidatoService {
 	public Candidato findByNome(String nome) {
 		Optional<Candidato> obj = repository.findByNome(nome);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(nome + ": não foi encontrado"));
+	}
+
+	public List<Candidato> findAllCandidatos() {
+		return repository.findAll();
 	}
 }
