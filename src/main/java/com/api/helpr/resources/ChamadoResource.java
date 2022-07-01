@@ -89,6 +89,7 @@ public class ChamadoResource {
 		Chamado newObj = service.update(id, objDto);
 		return ResponseEntity.ok().body(new ChamadoDTO(newObj));
 	}	
+	
 	@GetMapping(value="/log/status")
 	public ResponseEntity<List<LogChamadoStatus>> findLogStatusChamado(){
 		LocalDate dataDia = LocalDate.now();
