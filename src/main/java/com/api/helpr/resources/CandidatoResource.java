@@ -9,9 +9,11 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,7 +28,7 @@ import com.api.helpr.services.CandidatoService;
 public class CandidatoResource {
 
 	@Autowired
-	private CandidatoService service;
+	private CandidatoService service;	
 
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@GetMapping
@@ -37,16 +39,40 @@ public class CandidatoResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')") 
 	@GetMapping(value = "/{nome}")
 	public ResponseEntity<CandidatoDTO> findByNome(@PathVariable String nome) {
 		Candidato obj = service.findByNome(nome);
 		return ResponseEntity.ok().body(new CandidatoDTO(obj));
 	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')") 
+	@GetMapping(value = "/id/{id}")
+	public ResponseEntity<CandidatoDTO> findById(@PathVariable Integer id){
+		Candidato obj = service.findById(id);
+		return ResponseEntity.ok().body(new CandidatoDTO(obj));
+	}
 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
 	@PostMapping
 	ResponseEntity<CandidatoDTO> createCandidato(@Valid @RequestBody CandidatoDTO objDto) {
 		Candidato newObj = service.create(objDto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
 		return ResponseEntity.created(uri).build();
+	}
+	 
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<CandidatoDTO> updateCandidato(
+			@PathVariable Integer id, @RequestBody CandidatoDTO objDTO){
+		Candidato obj = service.update(id, objDTO);
+		return ResponseEntity.ok().body(new CandidatoDTO(obj));
+	}
+	
+	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+	@DeleteMapping(value="{id}")
+	public ResponseEntity<CandidatoDTO> delete(@PathVariable Integer id){
+		service.delete(id);
+		return ResponseEntity.noContent().build();
 	}
 }
