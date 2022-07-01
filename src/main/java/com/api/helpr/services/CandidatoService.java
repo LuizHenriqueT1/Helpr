@@ -24,6 +24,11 @@ public class CandidatoService {
 		Candidato newObj = new Candidato(objDto);
 		return repository.save(newObj);
 	}
+	
+	public Candidato findById(Integer id) {
+		Optional<Candidato> obj = repository.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não foi encontrado: " + id));
+	}
 
 	public Candidato findByNome(String nome) {
 		Optional<Candidato> obj = repository.findByNome(nome);
@@ -32,5 +37,17 @@ public class CandidatoService {
 
 	public List<Candidato> findAllCandidatos() {
 		return repository.findAll();
+	}
+
+	public Candidato update(Integer id, CandidatoDTO objDto) {
+		objDto.setId(id);
+		Candidato oldObj = findById(id);
+		oldObj = new Candidato(objDto);
+		return repository.save(oldObj);
+	}
+
+	public void delete(Integer id) {
+		repository.deleteById(id);
+		
 	}
 }
