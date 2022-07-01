@@ -21,9 +21,9 @@ public class ClienteService {
 	@Autowired
 	private ClienteRepository repository;
 
-	@Autowired 
+	@Autowired
 	private PessoaRepository pessoaRepository;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
@@ -52,7 +52,7 @@ public class ClienteService {
 		oldObj = new Cliente(objDto);
 		return repository.save(oldObj);
 	}
-	
+
 	public void delete(Integer id) {
 		Cliente obj = findById(id);
 		if(obj.getChamados().size() > 0) {
@@ -62,7 +62,7 @@ public class ClienteService {
 		}
 		repository.deleteById(id);
 	}
-	
+
 	private void validaCpfEEmail(ClienteDTO objDto) {
 
 		Optional<Pessoa> obj = pessoaRepository.findByCpf(objDto.getCpf());
@@ -75,6 +75,14 @@ public class ClienteService {
 			throw new DataIntegrityViolationException("E-mail já cadastrado no sistema!");
 		}
 	}
+	public List<Cliente> findCliente(String nome) {
+		Optional<List<Cliente>> obj = repository.findCliente(nome);
+		if(obj.get().size() <= 0) {
+			obj = Optional.empty();
+		}
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Nome não encontrado "));
+	}
+
 
 
 }

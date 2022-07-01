@@ -2,6 +2,7 @@ package com.api.helpr.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.validation.Valid;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.api.helpr.domain.Cliente;
+
 import com.api.helpr.domain.dtos.ClienteDTO;
+
 import com.api.helpr.services.ClienteService;
 
 @RestController
@@ -35,6 +38,15 @@ public class ClienteResource {
 		Cliente obj = service.findById(id);
 		return ResponseEntity.ok().body(new ClienteDTO(obj));
 	}
+	
+	@GetMapping(value ="/usuario/{nome}")
+	public ResponseEntity<List<ClienteDTO>> findCliente(@PathVariable String nome){
+		List<Cliente> list = service.findCliente(nome);
+		List<ClienteDTO> listDto = list.stream()
+				.map(tec -> new ClienteDTO(tec)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+	}
+	
 	
 	@GetMapping
 	public ResponseEntity<List<ClienteDTO>> findAllClientes(){
